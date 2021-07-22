@@ -6,10 +6,17 @@ namespace MartianRobots.Robots {
     public class Position {
         #region Custom exceptions
         /// <summary>
-        /// Exception thrown then a position is not valid
+        /// Exception thrown when a position is not valid
         /// </summary>
         public class InvalidPositionException : Exception {
             public InvalidPositionException(string message) : base(message) { }
+        }
+
+        /// <summary>
+        /// Exception thrown when the orientation is not valid
+        /// </summary>
+        public class InvalidOrientationException : Exception {
+            public InvalidOrientationException(string message) : base(message) { }
         }
         #endregion
 
@@ -34,6 +41,23 @@ namespace MartianRobots.Robots {
         /// Maximim allowed value of a coordinate
         /// </summary>
         public const int MAX_COORDINATE = 50;
+
+        /// <summary>
+        /// Character corresponding to the EAST orientation
+        /// </summary>
+        private const string EAST_CHAR = "E";
+        /// <summary>
+        /// Character corresponding to the WEST orientation
+        /// </summary>
+        private const string WEST_CHAR = "W";
+        /// <summary>
+        /// Character corresponding to the NORTH orientation
+        /// </summary>
+        private const string NORTH_CHAR = "N";
+        /// <summary>
+        /// Character corresponding to the SOUTH orientation
+        /// </summary>
+        private const string SOUTH_CHAR = "S";
         #endregion
 
         #region Properties
@@ -71,9 +95,27 @@ namespace MartianRobots.Robots {
         }
 
         /// <summary>
-        /// Orientation coordinate of the current position
+        /// Orientation of the current position
         /// </summary>
         public EnumOrientation Orientation { get; set; }
+
+        /// <summary>
+        /// Orientation of the current position in string format
+        /// </summary>
+        public String VisualOrientation
+        {
+            get
+            {
+                switch (this.Orientation)
+                {
+                    case EnumOrientation.NORTH: return NORTH_CHAR;
+                    case EnumOrientation.SOUTH: return SOUTH_CHAR;
+                    case EnumOrientation.EAST: return EAST_CHAR;
+                    case EnumOrientation.WEST: return WEST_CHAR;
+                    default: return String.Empty;
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -100,7 +142,14 @@ namespace MartianRobots.Robots {
         }
         #endregion
 
-        #region Static methods
+        #region Instance methods
+        public override string ToString()
+        {
+            return String.Format("{0} {1} {2}", this.X, this.Y, this.Orientation.ToString());
+        }
+        #endregion
+
+        #region Static methods    
         /// <summary>
         /// Checks if the given value is a valid coordinate. Throws an exception if not.
         /// </summary>
@@ -112,6 +161,37 @@ namespace MartianRobots.Robots {
             {
                 String message = String.Format("Invalid X value. Must be in range [{0},{1}]", MIN_COORDINATE, MAX_COORDINATE);
                 throw new InvalidPositionException(message);
+            }
+        }
+
+        /// <summary>
+        /// Transforms a string coordinate in a integer one. Throws an exception if it's not valid
+        /// </summary>
+        /// <param name="coordinate">Value to parse</param>
+        /// <returns>Parsed coordinate</returns>
+        public static int ParseCoordinate(string coordinate)
+        {
+            int result = int.Parse(coordinate);
+            TryValidate(result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a string orientation in a enum one. Throws an exception if it's not valid.
+        /// </summary>
+        /// <param name="orientation">Value to parse</param>
+        /// <returns>Parsed orientation</returns>
+        public static EnumOrientation ParseOrientation(string orientation)
+        {
+            if (String.IsNullOrEmpty(orientation)) throw new InvalidOrientationException("Orientation cannot be empty");
+            switch (orientation.ToUpper())
+            {
+                case NORTH_CHAR: return EnumOrientation.NORTH;
+                case SOUTH_CHAR: return EnumOrientation.SOUTH;
+                case EAST_CHAR: return EnumOrientation.EAST;
+                case WEST_CHAR: return EnumOrientation.WEST;
+                default: throw new InvalidOrientationException("Invalid orientation value: " + orientation);
             }
         }
         #endregion

@@ -84,8 +84,8 @@ namespace MartianRobots.Planets {
             if (Regex.IsMatch(worldLimits, PLANET_LIMITS_REGEX))
             {
                 String[] values = worldLimits.Split(" ");
-                int XLimit = int.Parse(values[0]);
-                int YLimit = int.Parse(values[1]);
+                int XLimit = Position.ParseCoordinate(values[0]);
+                int YLimit = Position.ParseCoordinate(values[1]);
 
                 //TODO: Allow other subclasses creation with other properties
                 //if there is some interest in giving different properties to each planet

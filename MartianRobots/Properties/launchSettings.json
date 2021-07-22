@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MartianRobots": {
+      "commandName": "Project",
+      "commandLineArgs": "--instructions C:\\Users\\pavel\\Desktop\\DCSLChallenge\\MartianRobots\\Samples\\case1.txt"
+    }
+  }
+}

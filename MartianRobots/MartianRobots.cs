@@ -36,7 +36,7 @@ namespace MartianRobots {
                     string robotLine2 = instructions.ReadLine();
 
                     //Try to create a new robot instance
-                    Robot currentRobot = Robot.Create(robotLine1, robotLine2);
+                    Robot currentRobot = Robot.Create(mars, robotLine1, robotLine2);
                     //Try to apply movement to the robot
                     currentRobot.ApplyMovement();
                     //Add robot to the array
@@ -61,10 +61,10 @@ namespace MartianRobots {
     /// Class that contains the allowed arguments
     /// </summary>
     class Arguments {
-        [Option("--fast", Required = false, Default = true, HelpText="Apply a faster version that uses more memory")]
+        [Option("fast", Required = false, Default = true, HelpText="Apply a faster version that uses more memory")]
         public bool OptimizeSpeed { get; set; }
 
-        [Option("--instructions", Required = true, HelpText="Path to the file containing the movements")]
+        [Option("instructions", Required = true, HelpText="Path to the file containing the movements")]
         public string InstructionsPath { get; set; }
     }
     #endregion
