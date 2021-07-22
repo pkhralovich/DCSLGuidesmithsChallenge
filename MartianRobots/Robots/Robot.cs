@@ -1,4 +1,5 @@
 ﻿using MartianRobots.Planets;
+using MartianRobots.Robots.Movement;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,14 +31,6 @@ namespace MartianRobots.Robots {
 
         #region Constants
         /// <summary>
-        /// Pattern that must follow the robot position string
-        /// </summary>
-        private const string ROBOT_POSITION_PATTERN = @"\d+ \d+ [NSEW]";
-        /// <summary>
-        /// Pattern that must follow the robot instructions string
-        /// </summary>
-        private const string ROBOT_INSTRUCTIONS_PATTERN = @"[RFL]{1,100}";
-        /// <summary>
         /// Separator character between position information
         /// </summary>
         private const string POSITION_SEPARATOR = " ";
@@ -55,7 +48,11 @@ namespace MartianRobots.Robots {
         /// <summary>
         /// Returns the instructions set to be applied to the robot
         /// </summary>
-        public List<Instruction> Instructions { get; set; }
+        public List<IInstruction> Instructions { get; set; }
+        /// <summary>
+        /// Returns the planet where is located the robot
+        /// </summary>
+        public Planet CurrentPlanet { get; }
         #endregion
 
         #region Static Properties
@@ -68,10 +65,12 @@ namespace MartianRobots.Robots {
         /// </summary>
         /// <param name="pos">Initial position of the robot</param>
         /// <param name="instructions">Instructions set to apply to him</param>
-        private Robot(Position pos, List<Instruction> instructions)
+        /// <param name="planet">Planet where the robot is going to be located</param>
+        private Robot(Position pos, List<IInstruction> instructions, Planet planet)
         {
             this.IsLost = false;
             this.CurrentPosition = pos;
+            this.CurrentPlanet = planet;
             this.Instructions = instructions;
         }
         #endregion
@@ -104,8 +103,8 @@ namespace MartianRobots.Robots {
         public static Robot Create(Planet planet, string position, string instructions)
         {
             Position p = ParsePosition(planet, position);
-            List<Instruction> instrucctions = ParseInstructions(instructions);
-            return new Robot(p, instrucctions);
+            List<IInstruction> instrucctions = ParseInstructions(instructions);
+            return new Robot(p, instrucctions, planet);
         }
 
         /// <summary>
@@ -116,7 +115,8 @@ namespace MartianRobots.Robots {
         /// <returns>A new valid position</returns>
         private static Position ParsePosition(Planet planet, string position)
         {
-            if (Regex.IsMatch(position, ROBOT_POSITION_PATTERN))
+            string pattern = @"\d+ \d+ " + new string(Position.GetAllowedOrientations().ToArray());
+            if (Regex.IsMatch(position, pattern))
             {
                 String[] values = position.Split(POSITION_SEPARATOR);
                 int X = Position.ParseCoordinate(values[0]);
@@ -135,16 +135,17 @@ namespace MartianRobots.Robots {
         /// </summary>
         /// <param name="instructions">Instructions set to apply to the robot in string format</param>
         /// <returns>List of parsed instructions</returns>
-        private static List<Instruction> ParseInstructions(string instructions)
+        private static List<IInstruction> ParseInstructions(string instructions)
         {
-            if (Regex.IsMatch(instructions, ROBOT_INSTRUCTIONS_PATTERN))
+            string pattern = @"[" + new String(InstructionFactory.GetAllowedCommands().ToArray()) + "]{1,100}";
+            if (Regex.IsMatch(instructions, pattern))
             {
-                List<Instruction> oRes = new List<Instruction>();
+                List<IInstruction> oRes = new List<IInstruction>();
 
                 CharEnumerator enumerator = instructions.GetEnumerator();
                 while(enumerator.MoveNext())
                 {
-                    oRes.Add(Instruction.Create(enumerator.Current));
+                    oRes.Add(InstructionFactory.Create(enumerator.Current));
                 }
 
                 return oRes;

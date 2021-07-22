@@ -45,19 +45,19 @@ namespace MartianRobots.Robots {
         /// <summary>
         /// Character corresponding to the EAST orientation
         /// </summary>
-        private const string EAST_CHAR = "E";
+        private const char EAST_CHAR = 'E';
         /// <summary>
         /// Character corresponding to the WEST orientation
         /// </summary>
-        private const string WEST_CHAR = "W";
+        private const char WEST_CHAR = 'W';
         /// <summary>
         /// Character corresponding to the NORTH orientation
         /// </summary>
-        private const string NORTH_CHAR = "N";
+        private const char NORTH_CHAR = 'N';
         /// <summary>
         /// Character corresponding to the SOUTH orientation
         /// </summary>
-        private const string SOUTH_CHAR = "S";
+        private const char SOUTH_CHAR = 'S';
         #endregion
 
         #region Properties
@@ -102,7 +102,7 @@ namespace MartianRobots.Robots {
         /// <summary>
         /// Orientation of the current position in string format
         /// </summary>
-        public String VisualOrientation
+        public char VisualOrientation
         {
             get
             {
@@ -112,7 +112,7 @@ namespace MartianRobots.Robots {
                     case EnumOrientation.SOUTH: return SOUTH_CHAR;
                     case EnumOrientation.EAST: return EAST_CHAR;
                     case EnumOrientation.WEST: return WEST_CHAR;
-                    default: return String.Empty;
+                    default: throw new InvalidOrientationException("Invalid orientation:" + this.Orientation);
                 }
             }
         }
@@ -150,6 +150,11 @@ namespace MartianRobots.Robots {
         #endregion
 
         #region Static methods    
+        public static List<Char> GetAllowedOrientations()
+        {
+            return new List<Char>() { NORTH_CHAR, SOUTH_CHAR, WEST_CHAR, EAST_CHAR };
+        }
+        
         /// <summary>
         /// Checks if the given value is a valid coordinate. Throws an exception if not.
         /// </summary>
@@ -182,10 +187,12 @@ namespace MartianRobots.Robots {
         /// </summary>
         /// <param name="orientation">Value to parse</param>
         /// <returns>Parsed orientation</returns>
-        public static EnumOrientation ParseOrientation(string orientation)
+        public static EnumOrientation ParseOrientation(String orientation)
         {
             if (String.IsNullOrEmpty(orientation)) throw new InvalidOrientationException("Orientation cannot be empty");
-            switch (orientation.ToUpper())
+            if (orientation.Length > 1) throw new InvalidOrientationException("Invalid orientation value: " + orientation);
+
+            switch (Convert.ToChar(orientation))
             {
                 case NORTH_CHAR: return EnumOrientation.NORTH;
                 case SOUTH_CHAR: return EnumOrientation.SOUTH;
