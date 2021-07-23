@@ -4,7 +4,7 @@ using MartianRobots.Robots.Movement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static MartianRobots.Robots.Position;
 
-namespace MartianRobotsTest.Instructions {
+namespace MartianRobotsTest.Robots.Instructions {
     [TestClass]
     public class InstructionsTest {
         [TestMethod]

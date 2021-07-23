@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MartianRobots.Robots.Scent {
+﻿namespace MartianRobots.Robots.Scent {
     public class ScentMatrix : IScent {
         private bool[,] Memory;
 

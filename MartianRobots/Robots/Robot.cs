@@ -3,7 +3,6 @@ using MartianRobots.Robots.Movement;
 using MartianRobots.Robots.Scent;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using static MartianRobots.Robots.Position;
 

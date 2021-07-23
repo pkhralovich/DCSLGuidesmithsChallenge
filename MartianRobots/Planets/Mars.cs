@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MartianRobots.Planets {
+﻿namespace MartianRobots.Planets {
     /// <summary>
     /// A subclass of Planet representing Mars
     /// </summary>

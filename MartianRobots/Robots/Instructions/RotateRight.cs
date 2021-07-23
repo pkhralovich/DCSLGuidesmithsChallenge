@@ -1,7 +1,5 @@
 ﻿using MartianRobots.Robots.Movement;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using static MartianRobots.Robots.Position;
 
 namespace MartianRobots.Robots.Instructions {
