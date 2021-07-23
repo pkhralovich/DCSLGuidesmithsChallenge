@@ -25,10 +25,10 @@ namespace MartianRobots.Robots {
         /// Allowed orientations of a position
         /// </summary>
         public enum EnumOrientation {
-            NORTH = 0,
-            SOUTH = 1,
+            EAST = 0,
+            NORTH = 1,
             WEST = 2,
-            EAST = 3
+            SOUTH = 3
         }
         #endregion
 
