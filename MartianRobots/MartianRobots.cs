@@ -25,7 +25,7 @@ namespace MartianRobots {
                 Planet mars = Planet.Create(instructions.ReadLine());
 
                 //Initialize robots common "Scent"
-                Robot.InitScent(mars);
+                Robot.InitScent(config.OptimizeSpeed, mars);
                 //Initialize list of Robots
                 List<Robot> robots = new List<Robot>();
 

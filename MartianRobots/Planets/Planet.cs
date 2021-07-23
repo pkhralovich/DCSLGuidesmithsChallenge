@@ -58,9 +58,9 @@ namespace MartianRobots.Planets {
         /// <returns>True if the coordinates are in the valid range</returns>
         public bool InRange(int x, int y) {
             return x >= 0 
-                    && x <= ColumnCount
+                    && x < ColumnCount
                     && y >= 0 
-                    && y <= RowCount;
+                    && y < RowCount;
         }
         
         /// <summary>
@@ -84,8 +84,8 @@ namespace MartianRobots.Planets {
             if (Regex.IsMatch(worldLimits, PLANET_LIMITS_REGEX))
             {
                 String[] values = worldLimits.Split(" ");
-                int XLimit = Position.ParseCoordinate(values[0]);
-                int YLimit = Position.ParseCoordinate(values[1]);
+                int XLimit = Position.ParseCoordinate(values[0]) + 1;
+                int YLimit = Position.ParseCoordinate(values[1]) + 1;
 
                 //TODO: Allow other subclasses creation with other properties
                 //if there is some interest in giving different properties to each planet

@@ -1,5 +1,6 @@
 ﻿using MartianRobots.Planets;
 using MartianRobots.Robots.Movement;
+using MartianRobots.Robots.Scent;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -56,7 +57,7 @@ namespace MartianRobots.Robots {
         #endregion
 
         #region Static Properties
-        //TODO: Decide how to manage "Scent". It should be a centralized static storage system
+        private static IScent memory;
         #endregion
 
         #region Constructors
@@ -89,7 +90,13 @@ namespace MartianRobots.Robots {
                 instruction.Apply(nextPosition);
 
                 if (!this.CurrentPlanet.InRange(nextPosition))
+                {
+                    if (memory.IsLost(this.CurrentPosition))
+                        continue;
+
                     this.IsLost = true;
+                    memory.Add(this.CurrentPosition);
+                }
                 else this.CurrentPosition = nextPosition;
             }
         }
@@ -101,9 +108,14 @@ namespace MartianRobots.Robots {
         #endregion
 
         #region Static methods
-        public static void InitScent(Planet planet)
+        /// <summary>
+        /// Initializes de memory system of the robots
+        /// </summary>
+        /// <param name="optimizeSpeed">Tells to the robots if they should optimize the memory or the speed</param>
+        /// <param name="p">Planet where the robots are going to be placed</param>
+        public static void InitScent(bool optimizeSpeed, Planet p)
         {
-            throw new NotImplementedException("TODO: Implement");
+            if (memory == null) memory = ScentFactory.Create(optimizeSpeed, p);
         }
 
         /// <summary>

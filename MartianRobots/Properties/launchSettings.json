@@ -2,7 +2,7 @@
   "profiles": {
     "MartianRobots": {
       "commandName": "Project",
-      "commandLineArgs": "--instructions C:\\Users\\pavel\\Desktop\\DCSLChallenge\\MartianRobots\\Samples\\case1.txt"
+      "commandLineArgs": "--instructions C:\\Users\\pavel\\Desktop\\DCSLChallenge\\MartianRobots\\Samples\\case2.txt --fast false"
     }
   }
 }
