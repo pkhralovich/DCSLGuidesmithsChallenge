@@ -1,7 +1,7 @@
 ﻿using MartianRobots.Robots.Movement;
 
 namespace MartianRobots.Robots.Instructions {
-    class MoveForward : IInstruction {
+    public class MoveForward : IInstruction {
         /// <summary>
         /// Moves the position in the direction that it is oriented
         /// </summary>

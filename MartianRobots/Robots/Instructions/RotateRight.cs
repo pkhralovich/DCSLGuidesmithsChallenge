@@ -5,7 +5,7 @@ using System.Text;
 using static MartianRobots.Robots.Position;
 
 namespace MartianRobots.Robots.Instructions {
-    class RotateRight : IInstruction {
+    public class RotateRight : IInstruction {
         /// <summary>
         /// Rotates to the right the current position. Moving to right implies rotatin clockwise.
         /// For example: E -> S -> W -> N -> E

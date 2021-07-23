@@ -17,7 +17,7 @@ namespace MartianRobots.Planets {
         /// <summary>
         /// Pattern that must follow the planet limits string
         /// </summary>
-        private const string PLANET_LIMITS_REGEX = @"\d+ \d+";
+        private const string PLANET_LIMITS_REGEX = @"^\d+ \d+$";
         #endregion
 
         #region Properties
@@ -81,7 +81,7 @@ namespace MartianRobots.Planets {
         /// <returns>Returns a new planet</returns>
         public static Planet Create(String worldLimits) {
             //Check if the given string matches the expected pattern
-            if (Regex.IsMatch(worldLimits, PLANET_LIMITS_REGEX))
+            if (!String.IsNullOrEmpty(worldLimits) && Regex.IsMatch(worldLimits, PLANET_LIMITS_REGEX))
             {
                 String[] values = worldLimits.Split(" ");
                 int XLimit = Position.ParseCoordinate(values[0]) + 1;

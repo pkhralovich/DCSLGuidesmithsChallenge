@@ -158,6 +158,16 @@ namespace MartianRobots.Robots {
         {
             return String.Format("{0} {1} {2}", this.X, this.Y, this.Orientation.ToString());
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType()) return false;
+
+            Position target = (Position)obj;
+            return target.X == this.X
+                    && target.Y == this.Y
+                    && target.Orientation == this.Orientation;
+        }
         #endregion
 
         #region Static methods
