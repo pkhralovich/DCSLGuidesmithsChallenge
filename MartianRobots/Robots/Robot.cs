@@ -44,7 +44,7 @@ namespace MartianRobots.Robots {
         /// <summary>
         /// Returns the current position of the robot
         /// </summary>
-        public Position CurrentPosition { get; }
+        public Position CurrentPosition { get; private set; }
         /// <summary>
         /// Returns the instructions set to be applied to the robot
         /// </summary>
@@ -76,9 +76,22 @@ namespace MartianRobots.Robots {
         #endregion
 
         #region Instance methods
+        /// <summary>
+        /// Applies all the given instructions to the robot. If the robot is lost, it will stop applying them.
+        /// </summary>
         public void ApplyMovement()
         {
-            throw new NotImplementedException("TODO: Implement");
+            List<IInstruction>.Enumerator eInstructions = this.Instructions.GetEnumerator();
+            while (eInstructions.MoveNext() && !this.IsLost)
+            {
+                Position nextPosition = new Position(this.CurrentPosition);
+                IInstruction instruction = eInstructions.Current;
+                instruction.Apply(nextPosition);
+
+                if (!this.CurrentPlanet.InRange(nextPosition))
+                    this.IsLost = true;
+                else this.CurrentPosition = nextPosition;
+            }
         }
 
         public override string ToString()
@@ -115,7 +128,7 @@ namespace MartianRobots.Robots {
         /// <returns>A new valid position</returns>
         private static Position ParsePosition(Planet planet, string position)
         {
-            string pattern = @"\d+ \d+ " + new string(Position.GetAllowedOrientations().ToArray());
+            string pattern = @"\d+ \d+ [" + new string(Position.GetAllowedOrientations().ToArray()) + "]";
             if (Regex.IsMatch(position, pattern))
             {
                 String[] values = position.Split(POSITION_SEPARATOR);

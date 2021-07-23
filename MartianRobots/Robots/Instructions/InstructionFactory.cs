@@ -44,6 +44,10 @@ namespace MartianRobots.Robots.Movement {
             }
         }
 
+        /// <summary>
+        /// Returns a list of the allowed commands characters
+        /// </summary>
+        /// <returns>Allowed commands</returns>
         public static List<Char> GetAllowedCommands() {
             return new List<Char>() { ROTATE_RIGHT, ROTATE_LEFT, MOVE_FORWARD };
         }

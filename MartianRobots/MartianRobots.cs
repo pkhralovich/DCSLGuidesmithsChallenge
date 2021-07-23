@@ -45,7 +45,7 @@ namespace MartianRobots {
 
                 //Print results
                 Console.WriteLine("End of file! Results: ");
-                robots.ForEach(robot => robot.ToString());
+                robots.ForEach(robot => Console.WriteLine(robot.ToString()));
             } catch (FileNotFoundException e)
             {
                 Console.WriteLine("File not found. Check the entered path.");

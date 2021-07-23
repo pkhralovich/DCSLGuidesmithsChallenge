@@ -140,6 +140,17 @@ namespace MartianRobots.Robots {
             this.Y = Y;
             this.Orientation = orientation;
         }
+
+        /// <summary>
+        /// Creates a copy of the given position
+        /// </summary>
+        /// <param name="pos">Position to be cloned</param>
+        public Position(Position pos)
+        {
+            this.X = pos.X;
+            this.Y = pos.Y;
+            this.Orientation = pos.Orientation;
+        }
         #endregion
 
         #region Instance methods
@@ -149,7 +160,11 @@ namespace MartianRobots.Robots {
         }
         #endregion
 
-        #region Static methods    
+        #region Static methods
+        /// <summary>
+        /// Returns a list of the allowed orientations characters
+        /// </summary>
+        /// <returns>Allowed orientations</returns>
         public static List<Char> GetAllowedOrientations()
         {
             return new List<Char>() { NORTH_CHAR, SOUTH_CHAR, WEST_CHAR, EAST_CHAR };

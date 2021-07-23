@@ -2,6 +2,10 @@
 
 namespace MartianRobots.Robots.Instructions {
     class MoveForward : IInstruction {
+        /// <summary>
+        /// Moves the position in the direction that it is oriented
+        /// </summary>
+        /// <param name="pos">Position where the movement is going to be applied</param>
         public void Apply(Position pos)
         {
             if (pos.Orientation == Position.EnumOrientation.EAST) pos.X++;
