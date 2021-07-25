@@ -21,6 +21,8 @@ namespace MartianRobots {
         public static void MoveRobots(Arguments config) {
             try
             {
+                Position.FullFormat = config.FullFormat;
+
                 StreamReader instructions = new StreamReader(config.InstructionsPath);
                 Planet mars = Planet.Create(instructions.ReadLine());
 
@@ -61,8 +63,11 @@ namespace MartianRobots {
     /// Class that contains the allowed arguments
     /// </summary>
     public class Arguments {
-        [Option("fast", Required = false, Default = true, HelpText="Apply a faster version that uses more memory")]
+        [Option("fast", Required = false, Default = false, HelpText="Apply a faster version that uses more memory")]
         public bool OptimizeSpeed { get; set; }
+
+        [Option("fullFormat", Required = false, Default = false, HelpText="True to print the full orientation test, false for the shortened version")]
+        public bool FullFormat { get; set; }
 
         [Option("instructions", Required = true, HelpText="Path to the file containing the movements")]
         public string InstructionsPath { get; set; }

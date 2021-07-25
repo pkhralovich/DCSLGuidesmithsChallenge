@@ -60,8 +60,7 @@ namespace MartianRobots.Robots {
         #endregion
 
         #region Properties
-        private int _X;
-        private int _Y;
+        public static bool FullFormat = true;
 
         /// <summary>
         /// X coordinate of the current position
@@ -135,7 +134,7 @@ namespace MartianRobots.Robots {
         #region Instance methods
         public override string ToString()
         {
-            return String.Format("{0} {1} {2}", this.X, this.Y, this.Orientation.ToString());
+            return String.Format("{0} {1} {2}", this.X, this.Y, GetOrientationString());
         }
 
         public override bool Equals(object obj)
@@ -146,6 +145,12 @@ namespace MartianRobots.Robots {
             return target.X == this.X
                     && target.Y == this.Y
                     && target.Orientation == this.Orientation;
+        }
+
+        private string GetOrientationString()
+        {
+            if (FullFormat) return Orientation.ToString();
+            else return Orientation.ToString().Substring(0, 1);
         }
         #endregion
 

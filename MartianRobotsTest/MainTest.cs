@@ -21,6 +21,7 @@ namespace MartianRobotsTest {
         {
             Arguments args = new Arguments();
             args.OptimizeSpeed = true;
+            args.FullFormat = true;
 
             String path = Directory.GetCurrentDirectory();
             path = Directory.GetParent(path).FullName;
