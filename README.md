@@ -35,8 +35,9 @@ The only compulsory param is the --instructions, which must be a path to a file 
 
 ## Class diagram
 
+The class diagram does not contain the Main class, as I think that it's not necessary to understand the arquitecture of the entire project.
 
-
+![enter image description here](https://raw.githubusercontent.com/pkhralovich/DCSLGuidesmithsChallenge/main/Other/classDiagram.png)
 
 ## Patterns
 I applied two design pattern to this application, in order to make it easier to add new instructions, as it was written in the requirements. These pattern are:
