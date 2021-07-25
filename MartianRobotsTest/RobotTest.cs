@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MartianRobotsTest {
-    class RobotTest {
+    public class RobotTest {
         //ApplyMovement_Lst
         //ApplyMovement_Full
         //ApplyMovement_NullException

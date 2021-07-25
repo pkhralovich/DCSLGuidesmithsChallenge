@@ -66,32 +66,12 @@ namespace MartianRobots.Robots {
         /// <summary>
         /// X coordinate of the current position
         /// </summary>
-        public int X
-        {
-            get
-            {
-                return _X;
-            }
-            set
-            {
-                Position.TryValidate(value);
-                _X = value;
-            }
-        }
+        public int X { get; set; }
 
         /// <summary>
         /// Y coordinate of the current position
         /// </summary>
-        public int Y {
-            get
-            {
-                return _Y;
-            }
-            set {
-                Position.TryValidate(Y);
-                _Y = value;
-            }
-        }
+        public int Y { get; set; }
 
         /// <summary>
         /// Orientation of the current position
@@ -184,11 +164,11 @@ namespace MartianRobots.Robots {
         /// </summary>
         /// <param name="value">Value to check</param>
         /// <exception cref="InvalidPositionException">The value is not inside the allowed range</throws>
-        private static void TryValidate(int value)
+        private static void TryValidate(int value, bool isX)
         {
             if (value > MAX_COORDINATE || value < MIN_COORDINATE)
             {
-                String message = String.Format("Invalid X value. Must be in range [{0},{1}]", MIN_COORDINATE, MAX_COORDINATE);
+                String message = String.Format("Invalid " + (isX ? "X" : "Y") + " value. Must be in range [{0},{1}]", MIN_COORDINATE, MAX_COORDINATE);
                 throw new InvalidPositionException(message);
             }
         }
@@ -198,10 +178,10 @@ namespace MartianRobots.Robots {
         /// </summary>
         /// <param name="coordinate">Value to parse</param>
         /// <returns>Parsed coordinate</returns>
-        public static int ParseCoordinate(string coordinate)
+        public static int ParseCoordinate(string coordinate, bool isX)
         {
             int result = int.Parse(coordinate);
-            TryValidate(result);
+            TryValidate(result, isX);
 
             return result;
         }

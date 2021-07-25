@@ -102,7 +102,7 @@ namespace MartianRobots.Robots {
 
         public override string ToString()
         {
-            return String.Format("{0} {1}", this.CurrentPosition.ToString(), this.IsLost ? "LOST" : String.Empty);
+            return String.Format("{0}{1}", this.CurrentPosition.ToString(), this.IsLost ? " LOST" : String.Empty);
         }
         #endregion
 
@@ -115,6 +115,14 @@ namespace MartianRobots.Robots {
         public static void InitScent(bool optimizeSpeed, Planet p)
         {
             if (memory == null) memory = ScentFactory.Create(optimizeSpeed, p);
+        }
+
+        /// <summary>
+        /// Resets the memory of the rebots to the initial state. InitScent must be called again.
+        /// </summary>
+        public static void ResetScent()
+        {
+            memory = null;
         }
 
         /// <summary>
@@ -139,12 +147,12 @@ namespace MartianRobots.Robots {
         /// <returns>A new valid position</returns>
         private static Position ParsePosition(Planet planet, string position)
         {
-            string pattern = @"\d+ \d+ [" + new string(Position.GetAllowedOrientations().ToArray()) + "]";
+            string pattern = @"^\d+ \d+ [" + new string(Position.GetAllowedOrientations().ToArray()) + "]$";
             if (Regex.IsMatch(position, pattern))
             {
                 String[] values = position.Split(POSITION_SEPARATOR);
-                int X = Position.ParseCoordinate(values[0]);
-                int Y = Position.ParseCoordinate(values[1]);
+                int X = Position.ParseCoordinate(values[0], true);
+                int Y = Position.ParseCoordinate(values[1], false);
                 EnumOrientation orientation = Position.ParseOrientation(values[2]);
 
                 if (!planet.InRange(X, Y)) throw new RobotPositionException("Robot coordinates out of planet bounds");
@@ -161,7 +169,7 @@ namespace MartianRobots.Robots {
         /// <returns>List of parsed instructions</returns>
         private static List<IInstruction> ParseInstructions(string instructions)
         {
-            string pattern = @"[" + new String(InstructionFactory.GetAllowedCommands().ToArray()) + "]{1,100}";
+            string pattern = @"^[" + new String(InstructionFactory.GetAllowedCommands().ToArray()) + "]{1,100}$";
             if (Regex.IsMatch(instructions, pattern))
             {
                 List<IInstruction> oRes = new List<IInstruction>();

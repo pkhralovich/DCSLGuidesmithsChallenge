@@ -18,7 +18,7 @@ namespace MartianRobots {
         /// Try to execute script with the given config
         /// </summary>
         /// <param name="config">Configuration params</param>
-        private static void MoveRobots(Arguments config) {
+        public static void MoveRobots(Arguments config) {
             try
             {
                 StreamReader instructions = new StreamReader(config.InstructionsPath);
@@ -44,14 +44,14 @@ namespace MartianRobots {
                 }
 
                 //Print results
-                Console.WriteLine("End of file! Results: ");
+                //Console.WriteLine("End of file! Results: ");
                 robots.ForEach(robot => Console.WriteLine(robot.ToString()));
             } catch (FileNotFoundException e)
             {
                 Console.WriteLine("File not found. Check the entered path.");
             } catch (Exception e)
             {
-                Console.WriteLine("Oops... Something happned:" + e.Message);
+                Console.WriteLine("Oops... Something happened: " + e.Message);
             }
         }
     }
@@ -60,7 +60,7 @@ namespace MartianRobots {
     /// <summary>
     /// Class that contains the allowed arguments
     /// </summary>
-    class Arguments {
+    public class Arguments {
         [Option("fast", Required = false, Default = true, HelpText="Apply a faster version that uses more memory")]
         public bool OptimizeSpeed { get; set; }
 

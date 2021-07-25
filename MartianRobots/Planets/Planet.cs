@@ -9,7 +9,7 @@ namespace MartianRobots.Planets {
         /// Exception that is thrown when an invalid string is given as the planets limit
         /// </summary>
         public class PlanetLimitsException : Exception {
-            public  PlanetLimitsException(string message) : base(message) { }
+            public PlanetLimitsException(string message) : base(message) { }
         }
         #endregion
 
@@ -84,12 +84,14 @@ namespace MartianRobots.Planets {
             if (!String.IsNullOrEmpty(worldLimits) && Regex.IsMatch(worldLimits, PLANET_LIMITS_REGEX))
             {
                 String[] values = worldLimits.Split(" ");
-                int XLimit = Position.ParseCoordinate(values[0]) + 1;
-                int YLimit = Position.ParseCoordinate(values[1]) + 1;
+                //Create planet with limits that contains the given right-top position.
+                //As it's a position and the world base is (0,0), we add a +1 to the given value.
+                int ColumnCount = Position.ParseCoordinate(values[0], true) + 1;
+                int RowCount = Position.ParseCoordinate(values[1], false) + 1;
 
                 //TODO: Allow other subclasses creation with other properties
                 //if there is some interest in giving different properties to each planet
-                return new Mars(YLimit, XLimit);
+                return new Mars(RowCount, ColumnCount);
             }
             else throw new PlanetLimitsException("Invalid worldLimits format");
         }
