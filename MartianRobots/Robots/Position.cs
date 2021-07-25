@@ -164,7 +164,7 @@ namespace MartianRobots.Robots {
         /// </summary>
         /// <param name="value">Value to check</param>
         /// <exception cref="InvalidPositionException">The value is not inside the allowed range</throws>
-        private static void TryValidate(int value, bool isX)
+        public static void TryValidate(int value, bool isX)
         {
             if (value > MAX_COORDINATE || value < MIN_COORDINATE)
             {

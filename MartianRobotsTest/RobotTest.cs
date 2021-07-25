@@ -15,7 +15,7 @@ namespace MartianRobotsTest {
         [ClassInitialize]
         public static void Init(TestContext context)
         {
-            p = new Mars(6, 6);
+            p = Planet.Create(6, 6);
         }
 
         [DataTestMethod]

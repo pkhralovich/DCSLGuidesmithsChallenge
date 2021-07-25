@@ -84,16 +84,26 @@ namespace MartianRobots.Planets {
             if (!String.IsNullOrEmpty(worldLimits) && Regex.IsMatch(worldLimits, PLANET_LIMITS_REGEX))
             {
                 String[] values = worldLimits.Split(" ");
+
                 //Create planet with limits that contains the given right-top position.
-                //As it's a position and the world base is (0,0), we add a +1 to the given value.
+                //As it's a position and the world base is (0,0), we add a +1 to the given value
+                //to make it match with the Column/Row count
                 int ColumnCount = Position.ParseCoordinate(values[0], true) + 1;
                 int RowCount = Position.ParseCoordinate(values[1], false) + 1;
 
-                //TODO: Allow other subclasses creation with other properties
-                //if there is some interest in giving different properties to each planet
                 return new Mars(RowCount, ColumnCount);
             }
             else throw new PlanetLimitsException("Invalid worldLimits format");
+        }
+
+        public static Planet Create(int RowCount, int ColumnCount)
+        {
+            //As the world base is (0,0), we add a -1 to the given value
+            //to make it match with the Column/Row count
+            Position.TryValidate(ColumnCount - 1, true);
+            Position.TryValidate(RowCount - 1, false);
+
+            return new Mars(RowCount, ColumnCount);
         }
         #endregion
     }
